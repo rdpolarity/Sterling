@@ -1,0 +1,23 @@
+{
+  "name": "Sterling",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "antd": "^3.26.7",
+    "parcel-bundler": "^1.12.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-icons": "^3.8.0"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10"
+  }
+}
