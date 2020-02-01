@@ -24,27 +24,49 @@ function between(min, max, v) {
   }
 }
 
+function getStore(name, other) {
+  const item = window.localStorage.getItem(name);
+  return item == null ? other : item;
+}
+
+function getStringBoolean(value) {
+  if (value == "true") {
+    return true;
+  } else if (value == "false") {
+    return false;
+  } else if (value == true || value == false) {
+    return value;
+  } else {
+    return null;
+  }
+}
+
 const App = props => {
-  const [brawn, setBrawn] = useState(2);
-  const [agility, setAgility] = useState(2);
-  const [mental, setMental] = useState(2);
-  const [steel, setSteel] = useState(2);
-  const [luck, setLuck] = useState(0);
+  const [brawn, setBrawn] = useState(getStore("brawn", 2));
+  const [agility, setAgility] = useState(getStore("agility", 2));
+  const [mental, setMental] = useState(getStore("mental", 2));
+  const [steel, setSteel] = useState(getStore("steel", 2));
+  const [luck, setLuck] = useState(getStore("luck", 0));
 
   const handleBrawn = value => {
     setBrawn(value);
+    window.localStorage.setItem("brawn", value);
   };
   const handleAgility = value => {
     setAgility(value);
+    window.localStorage.setItem("agility", value);
   };
   const handleMental = value => {
     setMental(value);
+    window.localStorage.setItem("mental", value);
   };
   const handleSteel = value => {
     setSteel(value);
+    window.localStorage.setItem("steel", value);
   };
   const handleLuck = value => {
     setLuck(value);
+    window.localStorage.setItem("luck", value);
   };
 
   const mapper = (map, value) => {
@@ -103,6 +125,7 @@ const App = props => {
         <Stat name="Movement" value={mapper(maps.movement, agility)} />
         <Stat name="Reflex" value={agility + mental} />
         <Stat name="Chrome" value={mapper(maps.chrome, steel)} />
+        <p>Aydie.Me Sterling v1.1 © 2020</p>
       </Col>
     </Row>
   );
@@ -118,6 +141,15 @@ const Stat = props => {
 };
 
 const Inputer = props => {
+  const [check, setCheck] = useState(
+    getStringBoolean(getStore(`${props.name}_checkbox`, false))
+  );
+  console.log(check);
+  const handleCheck = e => {
+    console.log(e.target.checked);
+    setCheck(e.target.checked);
+    window.localStorage.setItem(`${props.name}_checkbox`, e.target.checked);
+  };
   return (
     <Col>
       <Row gutter={[10, 10]} align="middle" justify="center" type="flex">
@@ -135,7 +167,7 @@ const Inputer = props => {
           />
         </Col>
         <Col>
-          <Checkbox />
+          <Checkbox onChange={handleCheck} checked={check} />
         </Col>
       </Row>
     </Col>
